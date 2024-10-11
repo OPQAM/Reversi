@@ -1,0 +1,85 @@
+section .data
+    num1 db '1', 0
+    num2 db '3', 0
+    newline db 0xa, 0    
+
+section .text
+    global _start
+
+_start:
+
+    ; Printing 1
+    mov eax, 4              ; syscall for sys_write
+    mov ebx, 1              ; file descriptor 1 is stdout
+    mov ecx, num1           ; pointer to the number '1'
+    mov edx, 1              ; length of '1'
+    int 0x80                ; call the kernel
+    
+    ; Printing the newline
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, newline
+    mov edx, 1
+    int 0x80
+
+    ; Printing 3
+    mov eax, 4    
+    mov ebx, 1    
+    mov ecx, num2 
+    mov edx, 1    
+    int 0x80      
+    
+    ; Printing the newline
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, newline
+    mov edx, 1
+
+    ; Adding 1 to 3
+    mov eax, '1'
+    sub eax, '0'            ; Convert ASCII '1' to integer 1
+    mov ebx, '3'
+    sub ebx, '0'            ; Ditto for 3
+    add eax, ebx
+
+    ; Convert to ASCII to print
+    add eax, '0'
+
+    ; Store result in register to print
+    mov [num1], al          ; al -> the lower 8 bits of eax
+
+; [num1] with the brackets means that we're referring to the
+; value stored at memory location of num1 (not num1 itself)
+; Why al? 'db' above allocates 1 byte of storage for each
+; element
+
+    ; Printing the result
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, num1           ; Pointer to result
+    mov edx, 1              ; length of result 1 (char)
+    int 0x80
+
+    ; Exiting the program
+    mov eax, 1              ; syscall number for sys_exit
+    xor ebx, ebx            ; return 0 status
+    int 0x80
+
+
+
+
+
+
+; ASCII conversion logic:
+
+; The ASCII value of '1' is 49
+; The ASCII value of '0' is 48
+; So, by making '1' - '0' we get 1.
+;
+; Offsetting by -48 always returns the
+; int value.
+;
+; And, likewise, adding to an int +48
+; returns us the ASCII corresponding
+; value
+

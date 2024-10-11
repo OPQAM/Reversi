@@ -1,0 +1,7 @@
+%%%% HASHDEEP-1.0
+%%%% size,md5,sha256,filename
+## Invoked from: /home/ricardo/NOTES/PROJECTS/Assembly
+## $ hashdeep -r HashdeepTest
+## 
+13,8ddd8be4b179a529afa5f2ffae4b9858,03ba204e50d126e4674c005e04d82e84c21366780af1f43bd54a37816b6ab340,/home/ricardo/NOTES/PROJECTS/Assembly/HashdeepTest/test_file1.txt
+14,12e84efbb8883d0c9ef2f8df5129f30d,54ad6b6d2716b9f7c0d251e7643d6656f85b050ada0da255ebb65659fe81225f,/home/ricardo/NOTES/PROJECTS/Assembly/HashdeepTest/test_file2.txt

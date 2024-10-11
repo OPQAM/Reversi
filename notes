@@ -1,0 +1,46 @@
+An assembly program can be divided into three sections −
+
+-> The data section,
+
+-> The bss section,
+
+-> The text section.
+
+
+The data section declares initialized data or constraints. 
+This does not change at runtime. We can declare various
+constant values, file names, or buffer size in there.
+
+syntax:
+     section.data
+
+The bss section is used for clearing variables.
+
+syntax:
+     section.bss
+
+The text section is used for keeping code. It must begin with the
+declaration global_start, which tells the program where
+the execution begins.
+
+syntax:
+    section.text
+    global _start
+    _start:
+
+; these, with a semicolon, are comments
+
+
+Assembly language programs have three types of statements:
+    -> Executable instructions or instructions,
+    -> Assembler directives or pseudo-ops,
+    -> Macros.
+
+The instructions tell the processor what to do. Each consists of an
+operation code (opcode). Each executable instruction generates one
+machine language instruction.
+
+The assembler directives or pseudo-ops tell the assembler about the
+various aspects of the assembly process.
+
+Macros are a text substitution mechanism.
