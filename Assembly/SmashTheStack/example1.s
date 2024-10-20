@@ -1,4 +1,4 @@
-	.file	"buffer_one.c"
+	.file	"example1.c"
 	.text
 	.globl	function
 	.type	function, @function
@@ -10,15 +10,11 @@ function:
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	subq	$32, %rsp
-	movq	%rdi, -24(%rbp)
-	movq	-24(%rbp), %rdx
-	leaq	-16(%rbp), %rax
-	movq	%rdx, %rsi
-	movq	%rax, %rdi
-	call	strcpy@PLT
+	movl	%edi, -20(%rbp)
+	movl	%esi, -24(%rbp)
+	movl	%edx, -28(%rbp)
 	nop
-	leave
+	popq	%rbp
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
@@ -34,22 +30,12 @@ main:
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	subq	$272, %rsp
-	movl	$0, -4(%rbp)
-	jmp	.L3
-.L4:
-	movl	-4(%rbp), %eax
-	cltq
-	movb	$65, -272(%rbp,%rax)
-	addl	$1, -4(%rbp)
-.L3:
-	cmpl	$254, -4(%rbp)
-	jle	.L4
-	leaq	-272(%rbp), %rax
-	movq	%rax, %rdi
+	movl	$3, %edx
+	movl	$2, %esi
+	movl	$1, %edi
 	call	function
 	nop
-	leave
+	popq	%rbp
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc

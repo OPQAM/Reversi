@@ -1,4 +1,4 @@
-	.file	"buffer_0_not_nice.c"
+	.file	"example2.c"
 	.text
 	.globl	function
 	.type	function, @function
@@ -10,28 +10,20 @@ function:
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	movl	%edi, -36(%rbp)
-	movl	%esi, -40(%rbp)
-	movl	%edx, -44(%rbp)
-	leaq	-13(%rbp), %rax
-	addq	$12, %rax
-	movq	%rax, -8(%rbp)
-	movq	-8(%rbp), %rax
-	movl	(%rax), %eax
-	leal	10(%rax), %edx
-	movq	-8(%rbp), %rax
-	movl	%edx, (%rax)
+	subq	$32, %rsp
+	movq	%rdi, -24(%rbp)
+	movq	-24(%rbp), %rdx
+	leaq	-16(%rbp), %rax
+	movq	%rdx, %rsi
+	movq	%rax, %rdi
+	call	strcpy@PLT
 	nop
-	popq	%rbp
+	leave
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
 .LFE0:
 	.size	function, .-function
-	.section	.rodata
-.LC0:
-	.string	"%d\n"
-	.text
 	.globl	main
 	.type	main, @function
 main:
@@ -42,19 +34,20 @@ main:
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	subq	$16, %rsp
+	subq	$272, %rsp
 	movl	$0, -4(%rbp)
-	movl	$3, %edx
-	movl	$2, %esi
-	movl	$1, %edi
-	call	function
-	movl	$1, -4(%rbp)
+	jmp	.L3
+.L4:
 	movl	-4(%rbp), %eax
-	movl	%eax, %esi
-	leaq	.LC0(%rip), %rax
+	cltq
+	movb	$65, -272(%rbp,%rax)
+	addl	$1, -4(%rbp)
+.L3:
+	cmpl	$254, -4(%rbp)
+	jle	.L4
+	leaq	-272(%rbp), %rax
 	movq	%rax, %rdi
-	movl	$0, %eax
-	call	printf@PLT
+	call	function
 	nop
 	leave
 	.cfi_def_cfa 7, 8
