@@ -15,3 +15,6 @@ void main() {
 	x = 1;
 	printf("%d\n", x);
 }
+
+
+/*This needs a change in the memory location, to avoid the sigfault and get the correct address*/

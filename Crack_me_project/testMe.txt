@@ -1,0 +1,13 @@
+so gcc -g -o ... VS gcc -s -o ... VS gcc -o
+
+3 different outputs?
+
+# Check binary protections
+checksec ./program
+# Look for strings
+strings ./program
+# Examine symbols and sections
+readelf -a ./program
+nm ./program
+
+Check last entries for chatgpt and claude!
