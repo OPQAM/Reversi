@@ -33,5 +33,16 @@ And lo and behold, I saw:
 So, yeah, I needed to change the value to 34.
 
 ---
+REDIRECTION:
+
+$ /challenge/hack 2> >(/challenge/the) | /challenge/planet
+
+This one has the command 'hack' produce stdout and stderr. 
+stderr is being redirector to a process substitution, making sure it goes to 'the'
+then the stdout it piped into 'planet'.
+
+Slightly cray-cray
+
+---
 
 
