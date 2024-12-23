@@ -1,0 +1,19 @@
+.intel_syntax noprefix
+.global _start
+
+_start:
+        and rdi, 1         # I make rdi into 1 if odd or 0 if even
+        xor rdi, 1         # I invert this result, because the exercise
+        xor rax, rax       # wants me to have 1 in rax for even and 0
+        xor rax, rdi       # for odd. So I zero rax and then write (or
+			   # not) into it
+
+# Here's my attempt at hacking this program, since it's wanting to compare
+# rdi with rax:
+
+#       xor rdi, rdi       # zero rdi (forcing it to be even)
+#       xor rax, rax       # zero rax (now I need to invert it)
+#       or rax, 1          # forcing it to be 1
+
+# NOTE: 
+

@@ -1,0 +1,24 @@
+shl al, 1     # shifting 1 bit to the left on the register 'al'
+
+10001010 > 00010100
+
+---
+
+.intel_syntax noprefix
+.global _start
+
+_start:
+
+        shr rdi, 32
+        mov al, dil
+
+# In here we wanted to load the 5th least significant byte of rdi into rax.
+# rdi = | B7 | B6 | B5 | B4 | B3 | B2 | B1 | B0 |
+
+# So, in this case, we want rax = B4, whatever B4 is.
+
+# We shift B4 to the right (32 bits), then we need to only load that onto
+# rax. We only want to load that byte, so we need to load only a small
+# part of rdi - ergo, dil
+
+
