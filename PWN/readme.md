@@ -1,6 +1,4 @@
 This is the folder for pwn.college classes and study sessions + random stuff found there
-Entrypoint:
-ssh -i key hacker@pwn.college
 
 ---
 
@@ -44,5 +42,7 @@ then the stdout it piped into 'planet'.
 Slightly cray-cray
 
 ---
+Entrypoint:
+ssh -i key hacker@pwn.college
 
 

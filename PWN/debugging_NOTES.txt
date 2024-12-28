@@ -1,0 +1,28 @@
+Using GDB to debug assembly code is a powerful way to understand your program's behavior. Let's walk through some basic steps to get you started:
+
+Compile with Debug Information: Make sure you compile your assembly code with the -g flag to include debug information. This helps GDB map your code to the source.
+
+gcc -g -o myprogram myprogram.s
+Starting GDB: Launch GDB with your compiled program.
+
+gdb ./myprogram
+Setting Breakpoints: You can set breakpoints at specific addresses or labels in your assembly code.
+
+(gdb) break *0x400080  # Replace with your address or label
+Running the Program: Start your program within GDB.
+
+(gdb) run
+Stepping Through Code: Use stepi to execute one instruction at a time, which is useful for assembly.
+
+(gdb) stepi
+Inspecting Registers: Check the values of registers to see how your program is manipulating data.
+
+(gdb) info registers
+Examining Memory: You can also examine memory at specific addresses.
+
+(gdb) x/4xw 0x600000  # Replace with your address
+Try these steps with your current assembly code and let me know how it goes. If you encounter any specific issues or have questions about certain instructions, feel free to ask!
+
+ 
+ 
+
