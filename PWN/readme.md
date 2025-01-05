@@ -43,6 +43,6 @@ Slightly cray-cray
 
 ---
 Entrypoint:
-ssh -i key hacker@pwn.college
+ssh -i ~/.ssh/key hacker@pwn.college
 
 
