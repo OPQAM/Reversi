@@ -12,6 +12,7 @@ loop:
         INC eax
         CMP eax,4
         JE end
+        JMP loop
 end:
         MOV eax,1
         MOV ebx,0
