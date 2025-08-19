@@ -1,5 +1,5 @@
 section .data
-    pathname DB "/home/opqam/Playground/Reversi/ASM/19_opening_and_reading_files/test.txt", 0
+    pathname DB "/home/opqam/Playground/Reversi/ASM/20_Lseek_with_files/test.txt", 0
 section .bss
     buffer: resb 10     ; Reserve 10 bytes for reading data
 section .text
