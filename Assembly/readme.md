@@ -24,3 +24,8 @@ Disassembling a program (file_dis.s):
 **objdump -d file > file_dis.s
     
 --snip--
+
+### This folder is an actual mess. Do something about it in the future.
+
+#### If wanting to do kernel OS stuff -> finish Olive Stem's. Beware of errors and mistakes in the original material
+#### If wanting to progress methodically on ASM, follow along the book (check out the ASM folder)

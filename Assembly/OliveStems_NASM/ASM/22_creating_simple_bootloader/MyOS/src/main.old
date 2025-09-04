@@ -1,0 +1,43 @@
+    ORG 0x7C00
+    BITS 16
+
+    main:
+        MOV ax,0
+        MOV ds,ax ; keeping track of the start address of the Data Segment
+        MOV es,ax ; keeping track of the start address of the Extra Segment
+        MOV ss,ax ; keeping track of the start address of the Stack Segment
+
+        MOV sp,0x7C00
+        MOV si,os_boot_msg
+        CALL print
+        HLT
+
+    halt:
+        JMP halt
+
+    print:
+        PUSH si
+        PUSH ax
+        PUSH bx
+
+    print_loop:
+        LODSB ; load single byte from location specified into si (and place into al?)
+        OR al,al
+        JZ done_print
+
+        MOV ah, 0x0E ; code to print character into the screen
+        MOB bh, 0    ; page number (?)
+        INT 0x10 ; video interrupt (BIOS will look at ah and see that it needs to print character in al)
+
+        JMP print_loop
+
+    done_print:
+        POP bx
+        POP ax
+        POP si
+        RET
+
+    os_boot_msg: DB 'Our OS has booted.', 0x0D, 0x0A, 0
+
+    TIMES 510-($-$$) DB 0
+    DW 0AA55h
