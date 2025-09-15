@@ -5,7 +5,7 @@ SECTION .text
 global  _start
 
 _start:
-; Clean exit
+; Writing Hello World
     mov edx, 13                      ; bytes to write
     mov ecx, msg
     mov ebx, 1                       ; write to STDOUT
