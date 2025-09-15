@@ -56,4 +56,29 @@ Linux man pages sections:
 
 ---
 
+#### Subroutines
+
+Subroutines are functions. We don't use them with jumps, but with CALL and RET. CALL and RET let's us re-use our subroutines.
+
+CALL pushes the return address (the instruction immediately after the CALL) onto the stack. RET pops that and jumps there.
+
+---
+
+#### Callee-saved and Caller-saved Registers
+
+Callee-saved must be put back by the callee. While Caller-saved might be trashed and the caller must expect them to be trashed.
+
+So, **EBX, EBP, ESI and EDI are Callee-Saved registers.** They must be preserved by the function if hey are used.
+
+Hence, in program 03, we see this:
+
+    26 strlen:
+    27     push    ebx 
+We'll be using EBX later, and so we push it onto the stack so that we later can pop it back and keep it with its original value. In this specific exercise, it matters not, since we weren't depending on EBX, but on other programs that might just be the case.
+Even though EBX isn’t critical here, following the convention keeps the function “ABI-safe” and makes it reusable in larger programs.
+
+Other registers, like **EAX, ECX and EDX are Caller-saved.** So the caller cannot really expect them to survive a function call.
+
+---
+
 
