@@ -3,7 +3,7 @@
 SYS_EXIT        equ 1       ; syscall number for exit
 SYS_WRITE       equ 4       ; syscall number for write
 STDOUT          equ 1       ; file descriptor 1 = stdout
-EXIT_SUCCESS    equ 0       ; program exit code
+LINEFEED        equ 10      ; linefeed character (0Ah)
 
 ;----------------------------------------
 ; int slen(String message)
@@ -39,7 +39,7 @@ finished:
 
 ;----------------------------------------
 ; void sprint(String message)
-; Print null-terminated string to STDOUT
+; String printing function
 ; Uses slen() to calculate string length
 sprint:
     ;----------------------------------------
@@ -64,8 +64,8 @@ sprint:
     mov     ecx, eax        ; ECX = buf (sys_write)
 
     ; Setup write syscall
-    mov     ebx, STDOUT     ; fd = 1 (STDOUT)
-    mov     eax, SYS_WRITE  ; number = 4 (sys_write)
+    mov     ebx, STDOUT     ; fd = 1 
+    mov     eax, SYS_WRITE  ; (4)
     int     80h             ; invoke kernel
 
     ;----------------------------------------
@@ -77,12 +77,31 @@ sprint:
     ret
 
 ;----------------------------------------
+; void sprintLF(String message)
+; String printing with line feed function
+sprintLF:
+    call    sprint
+
+    push    eax             ; push eax onto the stack while we use here
+    mov     eax, LINEFEED   ; ascii value of linefeed on eax now
+                            ; eax = 4 bytes wide, so 0000000Ah
+    push    eax             ; push linefeed onto stack. Remember, though
+                            ; that we have a little-endian achitecture
+                            ; so it's stored as 0Ah, 0h, 0h, 0h
+                            ; So, linefeed and then NULL terminated byte
+    mov     eax, esp        ; move address of stack pointer to eax
+    call    sprint          
+    pop     eax             ; remove linefeed from stack
+    pop     eax             ; restore eax before function call
+    ret
+
+;----------------------------------------
 ; void exit()
 ; Exit the program and restore resources
 quit: 
     ;----------------------------------------
     ; Setup exit syscall
-    mov     ebx, EXIT_SUCCESS   ; Exit status value (0)
-    mov     eax, SYS_EXIT       ; number = 1 (sys_exit)
+    mov     ebx, 0              ; Exit status value (success)
+    mov     eax, SYS_EXIT       ; (1)
     int     80h                 ; invoke kernel
     ret

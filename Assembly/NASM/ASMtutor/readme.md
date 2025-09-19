@@ -81,4 +81,33 @@ Other registers, like **EAX, ECX and EDX are Caller-saved.** So the caller canno
 
 ---
 
+#### No Linefeed for me, please
+
+We want to write a subroutine, in order to stop constantly having to write '0Ah' in all our messages. This is added into functions.asm as sprintLF:. This allows us to stop writing messages like
+    msg3    db      'My message', 0Ah, 0h
+And instead do 
+    msg     db      'My message', 0h
+
+sprintLF: substituted the simpler sprint: which was:
+        push    edx
+    push    ecx
+    push    ebx
+    push    eax
+    call    slen
+ 
+    mov     edx, eax
+    pop     eax
+ 
+    mov     ecx, eax
+    mov     ebx, 1
+    mov     eax, 4
+    int     80h
+ 
+    pop     ebx
+    pop     ecx
+    pop     edx
+    ret
+
+---
+
 
