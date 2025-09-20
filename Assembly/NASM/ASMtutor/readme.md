@@ -110,4 +110,16 @@ sprintLF: substituted the simpler sprint: which was:
 
 ---
 
+#### Passing Arguments into the program
 
+   ^                    **THE STACK**
+   |
+   |            | **nr of passed arguments** |
+   |            |      **program name**      |
+   |            |      **Argument 2*         |
+                |      **Argument 1**        |
+                |          **...**           |
+
+
+
+   
