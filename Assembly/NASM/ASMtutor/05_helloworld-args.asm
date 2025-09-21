@@ -1,6 +1,6 @@
 ; Program to Pass Arguments from the Command Line
-; Compile with: nasm -f elf helloworld-args.asm
-; Link with (64 bit needs elf_i386): ld -m elf_i386 helloworld-args.o -o helloworld-args
+; Compile with: nasm -f elf 05_helloworld-args.asm
+; Link with (64 bit needs elf_i386): ld -m elf_i386 05_helloworld-args.o -o helloworld-args
 ; Run with: ./helloworld-args
 
 %include        'functions.asm'

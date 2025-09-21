@@ -120,6 +120,21 @@ sprintLF: substituted the simpler sprint: which was:
                 |      **Argument 1**        |
                 |          **...**           |
 
+---
+
+#### The .bss section
+
+##### BLOCK Started by Symbol (BSS), is an area of the program used to reserve space in memory for uninitialised variables.
+
+Ex:
+
+    SECTION .bss                        ; Reserving space for:
+    variableName1:      RESB    1       ; 1 byte
+    variableName2:      RESW    1       ; 1 word
+    variableName3:      RESD    1       ; 1 double word
+    variableName4:      RESQ    1       ; 1 double precision float
+    variableName5:      REST    1       ; 1 extended precision float
+
+---
 
 
-   
