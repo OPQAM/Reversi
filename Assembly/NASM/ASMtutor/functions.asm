@@ -150,6 +150,45 @@ sprintLF:
     pop     eax             ; restore eax before function call
     ret
 
+;----------------------------------------
+; int atoi(Integer number)
+; Ascii to integer function (atoi)
+atoi:
+    push    ebx           ; preserve ebx on stack, for after function
+    push    ecx           ; preserve ecx on stack, for after function
+    push    edx           ; preserve edx on stack, for after function
+    push    esi           ; preserve esi on stack, for after function
+    mov     esi, eax      ; our number to convert
+    mov     eax, 0
+    mov     ecx, 0
+
+.multiplyLoop:
+    xor     ebx, ebx
+    mov     bl, [esi+ecx] ; 1 byte to lower half of ebx
+    cmp     bl, 48        ; compare to ascii char '0'
+    jl      .finished
+    cmp     bl, 57        ; compare to ascii char '9'
+    jg      .finished
+
+    sub     bl, 48        ; convert to decimal representation of ascii
+    add     eax, ebx      ; 
+    mov     ebx, 10
+    mul     ebx           ; get place value
+    inc     ecx           ; increment counter register
+    jmp     .multiplyLoop ; continue
+
+.finished:
+    cmp     ecx, 0
+    je      .restore      ; no arguments passed to atoi
+    mov     ebx, 10
+    div     ebx
+
+.restore:
+    pop     esi
+    pop     edx
+    pop     ecx
+    pop     ebx
+    ret
 
 ;----------------------------------------
 ; void exit()
