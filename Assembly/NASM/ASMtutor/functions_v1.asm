@@ -4,6 +4,8 @@ SYS_EXIT        equ 1       ; syscall number for exit
 SYS_WRITE       equ 4       ; syscall number for write
 STDOUT          equ 1       ; file descriptor 1 = stdout
 LINEFEED        equ 10      ; linefeed character (0Ah)
+CHAR_9          equ 57      ; ASCII character '9'
+CHAR_0          equ 48      ; ASCII character '0'
 
 
 ;----------------------------------------
@@ -14,26 +16,26 @@ iprint:
     push    ecx              ; the stack to be restored after function
     push    edx              ; runs
     push    esi
-    xor     ecx, ecx         ; this is a counter of how many bytes we
+    mov     ecx, 0           ; this is a counter of how many bytes we
                              ; have to print in the end
-.divideLoop:
+divideLoop:
     inc     ecx
-    xor     edx, edx         ; empty edx
+    mov     edx, 0           ; empty edx
     mov     esi, 10
     idiv    esi              ; divide eax by esi
     add     edx, 48          ; convert edx to ASCII (the remainder)
     push    edx              ; place result on the stack
     cmp     eax, 0           ; can we divide the integer any more?
-    jnz     .divideLoop
+    jnz     divideLoop
 
-.printLoop:
+printLoop:
     dec     ecx              ; remove bytes we place on stack
     mov     eax, esp         ; move stack pointer for printing
     call    sprint           ; string printing function is called
     pop     eax              ; remove last character from stack to 
                              ; move esp forward
     cmp     ecx, 0           ; check if all characters were printed
-    jnz     .printLoop
+    jnz     printLoop
 
     pop     esi              ; restore esi, edx, ecx, eax, from the
     pop     edx              ; value we pushed onto the stack at
@@ -49,7 +51,7 @@ iprintLF:
     call    iprint          ; call integer printing function
 
     push    eax
-    mov     eax, LINEFEED   
+    mov     eax, 0Ah        ; move linefeed character onto the stack
     push    eax
     mov     eax, esp
     call    sprint
@@ -68,18 +70,22 @@ iprintLF:
 
 slen:
     ;----------------------------------------
-    ; int slen(String message)
-    ; String length calculation function
-    push    ebx             
+    ; Preserve EBX (callee-saved register)
+    push    ebx             ; Save EBX on the stack
+
+    ;----------------------------------------
+    ; Store starting pointer in EBX
     mov     ebx, eax
 
-.nextchar:
+nextchar:
+    ;----------------------------------------
+    ; Loop through each character until null terminator is found
     cmp     byte [eax], 0   ; compare current byte to 0
-    jz      .finished        ; if 0 => jump to finished
+    jz      finished        ; if 0 => jump to finished
     inc     eax             ; increase EAX by 1
-    jmp     .nextchar        ; repeat loop
+    jmp     nextchar        ; repeat loop
 
-.finished:
+finished:
     ;----------------------------------------
     ; Calculate the string length
     sub     eax, ebx        ; EAX = current ptr - start ptr
@@ -90,24 +96,40 @@ slen:
 ;----------------------------------------
 ; void sprint(String message)
 ; String printing function
+; Uses slen() to calculate string length
 sprint:
+    ;----------------------------------------
+    ; Save registers that we will overwrite
+    ; EAX, ECX, EDX are caller-saved
+    ; EBX is callee-saved but we overwite it
     push    edx
     push    ecx
     push    ebx
     push    eax
+
+    ;----------------------------------------
+    ; Call slen(message)
+    ; EAX = pointer to string (argument)
     call    slen            ; returns length in EAX
 
+    ; Move length to EDX (sys_write expects it)
     mov     edx, eax
+
+    ; Restore original string pointer to ECX for write syscall
     pop     eax             ; restore original pointer
-    
     mov     ecx, eax        ; ECX = buf (sys_write)
+
+    ; Setup write syscall
     mov     ebx, STDOUT     ; fd = 1 
     mov     eax, SYS_WRITE  ; (4)
     int     80h             ; invoke kernel
 
+    ;----------------------------------------
+    ; Restore saved registers
     pop     ebx
     pop     ecx
     pop     edx
+
     ret
 
 
@@ -139,15 +161,15 @@ atoi:
     push    edx           ; preserve edx on stack, for after function
     push    esi           ; preserve esi on stack, for after function
     mov     esi, eax      ; our number to convert
-    xor     eax, eax
-    xor     ecx, ecx
+    mov     eax, 0
+    mov     ecx, 0
 
 .multiplyLoop:
     xor     ebx, ebx
     mov     bl, [esi+ecx] ; 1 byte to lower half of ebx
-    cmp     bl, 48        ; compare to ascii char '0'
+    cmp     bl, CHAR_0    ; compare to ascii char '0'
     jl      .finished
-    cmp     bl, 57        ; compare to ascii char '9'
+    cmp     bl, CHAR_9    ; compare to ascii char '9'
     jg      .finished
 
     sub     bl, 48        ; convert to decimal representation of ascii
@@ -176,7 +198,7 @@ atoi:
 quit: 
     ;----------------------------------------
     ; Setup exit syscall
-    xor     ebx, ebx            ; Exit status value (success)
+    mov     ebx, 0              ; Exit status value (success)
     mov     eax, SYS_EXIT       ; (1)
     int     80h                 ; invoke kernel
     ret

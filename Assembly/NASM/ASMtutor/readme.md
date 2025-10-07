@@ -142,3 +142,5 @@ Ex:
 Necessary in any software project that involves a codebase larger than a few functions. It provides scope to the identifiers and allows the reuse of naming conventions - for readability and maintainability. In ASM, subroutines are identified by global labes, so namespace can be achieved by using local labels.
 
 Local labels are prepended with a '.' at the beginning of their name.
+
+
