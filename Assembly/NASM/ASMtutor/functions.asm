@@ -5,6 +5,20 @@ SYS_WRITE       equ 4       ; syscall number for write
 STDOUT          equ 1       ; file descriptor 1 = stdout
 LINEFEED        equ 10      ; linefeed character (0Ah)
 
+;----------------------------------------
+; void iprintLF(Integer number)
+; Integer printing function with linefeed (itoa)
+iprintLF:
+    call    iprint          ; call integer printing function
+
+    push    eax
+    mov     eax, LINEFEED   
+    push    eax
+    mov     eax, esp
+    call    sprint
+    pop     eax             ; remove linefeed char from the stack
+    pop     eax             ; restore original value of eax
+    ret
 
 ;----------------------------------------
 ; void iprint(Integer number)
@@ -41,22 +55,28 @@ iprint:
     pop     eax
     ret
 
-
 ;----------------------------------------
-; void iprintLF(Integer number)
-; Integer printing function with linefeed (itoa)
-iprintLF:
-    call    iprint          ; call integer printing function
+; void sprint(String message)
+; String printing function
+sprint:
+    push    edx
+    push    ecx
+    push    ebx
+    push    eax
+    call    slen            ; returns length in EAX
 
-    push    eax
-    mov     eax, LINEFEED   
-    push    eax
-    mov     eax, esp
-    call    sprint
-    pop     eax             ; remove linefeed char from the stack
-    pop     eax             ; restore original value of eax
+    mov     edx, eax
+    pop     eax             ; restore original pointer
+    
+    mov     ecx, eax        ; ECX = buf (sys_write)
+    mov     ebx, STDOUT     ; fd = 1 
+    mov     eax, SYS_WRITE  ; (4)
+    int     80h             ; invoke kernel
+
+    pop     ebx
+    pop     ecx
+    pop     edx
     ret
-
 
 ;----------------------------------------
 ; int slen(String message)
@@ -85,31 +105,6 @@ slen:
     sub     eax, ebx        ; EAX = current ptr - start ptr
     pop     ebx             ; restore EBX before finishing
     ret                     ; return to caller. EAX = string length
-
-
-;----------------------------------------
-; void sprint(String message)
-; String printing function
-sprint:
-    push    edx
-    push    ecx
-    push    ebx
-    push    eax
-    call    slen            ; returns length in EAX
-
-    mov     edx, eax
-    pop     eax             ; restore original pointer
-    
-    mov     ecx, eax        ; ECX = buf (sys_write)
-    mov     ebx, STDOUT     ; fd = 1 
-    mov     eax, SYS_WRITE  ; (4)
-    int     80h             ; invoke kernel
-
-    pop     ebx
-    pop     ecx
-    pop     edx
-    ret
-
 
 ;----------------------------------------
 ; void sprintLF(String message)
