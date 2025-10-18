@@ -143,4 +143,12 @@ Necessary in any software project that involves a codebase larger than a few fun
 
 Local labels are prepended with a '.' at the beginning of their name.
 
+---
+
+#### A Note on Conditional Jumps (JG, JL, JA, JB)
+
+We use JG (jump if greater than..) and JL (Jump if less than..) for signed values and JA (jump if above..) or JB (jump if below..) for unsigned values.
+
+---
+
 
