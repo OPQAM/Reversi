@@ -151,4 +151,28 @@ We use JG (jump if greater than..) and JL (Jump if less than..) for signed value
 
 ---
 
+#### Register flipping with xor + 3 steps
+
+Let, for example eax = X and ebx = Y
+
+X = 0110     Objective X = 1100
+Y = 1100     Objective Y = 0110
+
+Property:
+    (X xor Y) xor Y = X (for all values of X,Y)
+
+--> xor X, Y
+X = 1010          ; X = (X xor Y)
+Y = 1100          ; Y = Y
+
+--> xor Y, X
+X = 1010          ; X = (X xor Y)
+Y = 0110          ; Y = (X xor Y) xor Y ----> So Y = X   (done)
+ 
+--> xor X, Y
+X = 1100          ; X = (X xor Y) xor X ----> So X = Y   (done)
+Y = 0110          ; Y = X
+
+---
+
 
