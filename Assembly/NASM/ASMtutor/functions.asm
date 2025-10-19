@@ -35,7 +35,7 @@ iprint:
     xor     edx, edx         ; empty edx
     mov     esi, 10
     idiv    esi              ; divide eax by esi
-    add     edx, 48          ; convert edx to ASCII (the remainder)
+    add     edx, 0x30          ; convert edx to ASCII (the remainder)
     push    edx              ; place result on the stack
     cmp     eax, 0           ; can we divide the integer any more?
     jnz     .divideLoop
