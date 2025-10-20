@@ -6,7 +6,14 @@
 %include        'functions.asm'
 
 SECTION .data
+;command         db      '/bin/ls', 0h     ; alternative command to be executed
+;command         db      '/bin/sleep', 0h     ; alternative command to be executed
 command         db      '/bin/echo', 0h     ; command to be executed
+
+
+
+;arg1            db      '-l', 0h
+;arg1            db      '5', 0h
 arg1            db      'Hello World!', 0h
 arguments       dd      command
                 dd      arg1                ; arguments to pass to the commandline
