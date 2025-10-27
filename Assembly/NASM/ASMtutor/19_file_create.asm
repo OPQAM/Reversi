@@ -16,6 +16,6 @@ _start:
     mov     ecx, 0777o      ; octal. Setting all permissions to read, write, execute
     mov     ebx, filename
     mov     eax, 8          ; invoke SYS_CREAT (kernel opcode 8)
-    int 80h
+    int     80h
 
-    call quit
+    call    quit
