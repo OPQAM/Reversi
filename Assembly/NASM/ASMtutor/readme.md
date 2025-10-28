@@ -175,4 +175,13 @@ Y = 0110          ; Y = X
 
 ---
 
+#### File Handling - opening file
+
+                                                Value
+    O_RDONLY 	open file in read  only mode 	  0
+    O_WRONLY 	open file in write only mode 	  1
+    O_RDWR 	    open file in read+write mode      2
+
+---
+
 
