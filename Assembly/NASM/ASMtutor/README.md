@@ -184,4 +184,30 @@ Y = 0110          ; Y = X
 
 ---
 
+#### Descriptor Table
+
+Every process has its own copy of the open file table (or descriptor table). It's part of OS bookkeeping.
+When a file is 'open' we get another row on that process table. When closed, that same row is deleted. This simply means that our program, our process either has connection to that file or not.
+
+*stdin*, *stdout* and *stderr* are always present when the program starts. But we can do redirection, of course. Example:
+
+./program > output.txt
+
+In this case, FD 1 (stdout) no longer is pointing to the screen, it's pointing to output.txt.
+
+When running a command in a shell, a new process is created using fork().
+In that child process, redirections or pipes are set up - so it can close, duplicate or repurpose 0, 1 and 2 however it wants (child processes start with a copy of the parent's file descriptor table).
+
+When the program ends, the entire process (and the FD table) disappears.
+
+Imagine a file descriptor table after opening a file to be read:
+
+**number**   **Purpose**           **Where it Points to**
+    0	    standard input	   your keyboard / terminal input
+    1	    standard output	   your terminal screen
+    2       standard error	   your terminal screen (separately)
+    3       opened file        /home/user/readme.txt
+
+---
+
 

@@ -25,4 +25,10 @@ _start:
     mov     eax, 4
     int     80h
 
-    mov     ecx, 0      ; flag for readonly access mode (O_RDONLY)
+    mov     ecx, 0          ; flag for readonly access mode (O_RDONLY)
+    mov     ebx, filename   
+    mov     eax, 5          ; invoking SYS_OPEN (kernel opcode 5)
+    int     80h
+
+    call    iprintLF
+    call    quit
