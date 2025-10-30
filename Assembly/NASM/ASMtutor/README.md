@@ -184,6 +184,20 @@ Y = 0110          ; Y = X
 
 ---
 
+### File Handling - Seek
+
+sys_lseek lets us move the cursor within the file by an offset in bytes.
+We can then use syss_write and update the content at that position.
+
+3 arguments for sys_lseek:
+
+                                    	        Value
+    SEEK_SET 	beginning of the file             0
+    SEEK_CUR 	current file offset               1
+    SEEK_END 	end of the file 	              2
+
+---
+
 #### Descriptor Table
 
 Every process has its own copy of the open file table (or descriptor table). It's part of OS bookkeeping.
