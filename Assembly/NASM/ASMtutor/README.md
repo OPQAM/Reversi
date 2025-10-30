@@ -224,4 +224,26 @@ Imagine a file descriptor table after opening a file to be read:
 
 ---
 
+#### An educational step
+
+Let's look at the code:
+
+    mov     edx, 9              
+    mov     ecx, contents       
+    mov     ebx, ebx        ; placeholder (EBX already contains the file descriptor)       
+    mov     eax, 4              
+    int     80h                 
+
+The instruction **mov  ebx, ebx** is a no-op - it does nothing. It's here only as an educational placeholder to remind us that 'SYS_WRITE' expects the file descripor in EBX. Since EBX already contains the correct FD, the instruction is unnecessary.
+
+In real code it's clearer and safer to explicitly set the expected registers (for example:
+    **mov ebx, <fd>**
+or 
+    **mov ebx, eax**
+if the FD is returned in `eax`) rather than relying on a prior value.
+Re-initializing the registers costs a few cycles but makes the code more maintainable and less likely to break if the surrounding code changes.
+
+---
+
+
 
