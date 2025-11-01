@@ -6,8 +6,8 @@
 %include        'functions.asm'
 
 SECTION .data
-fizz        db      'Fizz', 0h
-buzz        db      'Buzz', 0h
+fizz        db      'Fizz', 0x00
+buzz        db      'Buzz', 0x00
 
 SECTION .text
 global  _start

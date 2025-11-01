@@ -6,19 +6,19 @@
 %include        'functions.asm'
 
 SECTION .data
-;command         db      '/bin/ls', 0h     ; alternative command to be executed
-;command         db      '/bin/sleep', 0h     ; alternative command to be executed
-command         db      '/bin/echo', 0h     ; command to be executed
+;command         db      '/bin/ls', 0x00     ; alternative command to be executed
+;command         db      '/bin/sleep', 0x00  ; alternative command to be executed
+command         db      '/bin/echo', 0x00    ; command to be executed
 
 
 
 ;arg1            db      '-l', 0h
 ;arg1            db      '5', 0h
-arg1            db      'Hello World!', 0h
+arg1            db      'Hello World!', 0x00
 arguments       dd      command
                 dd      arg1                ; arguments to pass to the commandline
-                dd      0h                  ; end of struct
-environment     dd      0h                  ; args to pass as env variables; end struct
+                dd      0x00                ; end of struct
+environment     dd      0x00                ; args to pass as env variables; end struct
 
 SECTION .text
 global  _start
@@ -27,7 +27,7 @@ _start:
     mov     edx, environment    ; address of env variables
     mov     ecx, arguments      ; address of arguments to pass to the commandline
     mov     ebx, command        ; address of the file to execute
-    mov     eax, 11             ; invoking SYS_EXECVE (kernel opcode 11)
+    mov     eax, 0x0b            ; invoking SYS_EXECVE (kernel opcode 11)
     int     80h
 
     call    quit

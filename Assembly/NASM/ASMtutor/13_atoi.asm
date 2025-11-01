@@ -16,7 +16,7 @@ _start:
     xor     edx, edx    ; data register = 0 (to store additions)
 
 nextArg:
-    cmp     ecx, 0h     ; check if arguments left
+    cmp     ecx, 0      ; check if arguments left
     jz      noMoreArgs  ; if zero is set
     pop     eax         ; pop next argument off the stack
     call    atoi        

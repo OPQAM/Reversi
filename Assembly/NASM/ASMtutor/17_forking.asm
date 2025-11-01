@@ -6,8 +6,8 @@
 %include        'functions.asm'
 
 SECTION .data
-childMsg        db      'This is the child process', 0h
-parentMsg       db      'This is the parent process', 0h
+childMsg        db      'This is the child process', 0x00
+parentMsg       db      'This is the parent process', 0x00
 
 SECTION .text
 global  _start
