@@ -1,9 +1,9 @@
 ;----------------------------------------
 ; Constants / Equates
-SYS_EXIT        equ 1       ; syscall number for exit
-SYS_WRITE       equ 4       ; syscall number for write
-STDOUT          equ 1       ; file descriptor 1 = stdout
-LINEFEED        equ 10      ; linefeed character (0Ah)
+SYS_EXIT        equ 0x01    ; syscall number for exit
+SYS_WRITE       equ 0x04    ; syscall number for write
+STDOUT          equ 0x01    ; file descriptor 1 = stdout
+LINEFEED        equ 0x0a    ; linefeed character (0Ah)
 
 ;----------------------------------------
 ; void iprintLF(Integer number)
@@ -71,7 +71,7 @@ sprint:
     mov     ecx, eax        ; ECX = buf (sys_write)
     mov     ebx, STDOUT     ; fd = 1 
     mov     eax, SYS_WRITE  ; (4)
-    int     80h             ; invoke kernel
+    int     0x80            ; invoke kernel
 
     pop     ebx
     pop     ecx
@@ -140,12 +140,12 @@ atoi:
 .multiplyLoop:
     xor     ebx, ebx
     mov     bl, [esi+ecx] ; 1 byte to lower half of ebx
-    cmp     bl, 48        ; compare to ascii char '0'
+    cmp     bl, 0x30      ; compare to ascii char '0'
     jl      .finished
-    cmp     bl, 57        ; compare to ascii char '9'
+    cmp     bl, 0x39      ; compare to ascii char '9'
     jg      .finished
 
-    sub     bl, 48        ; convert to decimal representation of ascii
+    sub     bl, 0x30      ; convert to decimal representation of ascii
     add     eax, ebx      ; 
     mov     ebx, 10
     mul     ebx           ; get place value
@@ -171,7 +171,7 @@ atoi:
 quit: 
     ;----------------------------------------
     ; Setup exit syscall
-    xor     ebx, ebx            ; Exit status value (success)
-    mov     eax, SYS_EXIT       ; (1)
-    int     80h                 ; invoke kernel
+    xor     ebx, ebx      ; Exit status value (success)
+    mov     eax, SYS_EXIT ; (1)
+    int     0x80          ; invoke kernel
     ret

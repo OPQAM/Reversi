@@ -16,12 +16,12 @@ _start:
 
 _socket:
 
-    push    byte 6      ; IPPROTO TCP
-    push    byte 1      ; SOCK_STREAM
-    push    byte 2      ; PF_INET
+    push    byte 0x06   ; IPPROTO TCP
+    push    byte 0x01   ; SOCK_STREAM
+    push    byte 0x02   ; PF_INET
     mov     ecx, esp    ; move address of arguments into ecx
-    mov     ebx, 1      ; invoke subroutine SOCKET (1)
-    mov     eax, 102    ; invoke SYS_SOCKETCALL (kernel opecode 102)
+    mov     ebx, 0x01   ; invoke subroutine SOCKET (1)
+    mov     eax, 0x66   ; invoke SYS_SOCKETCALL (kernel opecode 102)
     int     0x80
 
     call    iprintLF    ; (on error -1 will be printed)

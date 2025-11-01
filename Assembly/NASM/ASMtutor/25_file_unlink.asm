@@ -6,7 +6,7 @@
 %include    'functions.asm'
 
 SECTION .data
-filename db 'readme.txt', 0h
+filename db 'readme.txt', 0x00
 
 SECTION .text
 global  _start
@@ -15,6 +15,6 @@ _start:
 
     mov     ebx, filename
     mov     eax, 0x0a           ; SYS_UNLINK
-    int     80h
+    int     0x80
 
     call    quit

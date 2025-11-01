@@ -6,23 +6,23 @@
 %include    'functions.asm'
 
 SECTION .data
-filename db 'readme.txt', 0h
-contents db 'Hello World!', 0h
+filename db 'readme.txt', 0x00
+contents db 'Hello World!', 0x00
 
 SECTION .text
 global  _start
 
 _start:
 
-    mov     ecx, 0777o      ; permissions
+    mov     ecx, 0777o          ; permissions
     mov     ebx, filename
-    mov     eax, 8          ; SYS_CREATE
-    int     80h
+    mov     eax, 0x08           ; SYS_CREATE
+    int     0x80
 
-    mov     edx, 12         ; number of bytes to write
+    mov     edx, 12             ; number of bytes to write
     mov     ecx, contents
     mov     ebx, eax        
-    mov     eax, 4          ; SYS_WRITE (kernel opcode 4)
-    int     80h
+    mov     eax, 0x04           ; SYS_WRITE (kernel opcode 4)
+    int     0x80
 
     call    quit

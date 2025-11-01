@@ -6,7 +6,7 @@ i; Create
 %include        'functions.asm'
 
 SECTION .data
-filename db 'readme.txt', 0h    ; filename to create
+filename db 'readme.txt', 0x00    ; filename to create
 
 SECTION .text
 global  _start
@@ -15,7 +15,7 @@ _start:
 
     mov     ecx, 0777o      ; octal. Setting all permissions to read, write, execute
     mov     ebx, filename
-    mov     eax, 8          ; invoke SYS_CREAT (kernel opcode 8)
-    int     80h
+    mov     eax, 0x08       ; invoke SYS_CREAT (kernel opcode 8)
+    int     0x80
 
     call    quit

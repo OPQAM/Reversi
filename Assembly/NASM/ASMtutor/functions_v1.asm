@@ -1,11 +1,11 @@
 ;----------------------------------------
 ; Constants / Equates
-SYS_EXIT        equ 1       ; syscall number for exit
-SYS_WRITE       equ 4       ; syscall number for write
-STDOUT          equ 1       ; file descriptor 1 = stdout
-LINEFEED        equ 10      ; linefeed character (0Ah)
-CHAR_9          equ 57      ; ASCII character '9'
-CHAR_0          equ 48      ; ASCII character '0'
+SYS_EXIT     equ 0x01        ; syscall number for exit
+SYS_WRITE    equ 0x04        ; syscall number for write
+STDOUT       equ 0x01        ; file descriptor 1 = stdout
+LINEFEED     equ 0x0a        ; linefeed character (0Ah)
+CHAR_9       equ 0x39        ; ASCII character '9'
+CHAR_0       equ 0x30        ; ASCII character '0'
 
 
 ;----------------------------------------
@@ -23,7 +23,7 @@ divideLoop:
     mov     edx, 0           ; empty edx
     mov     esi, 10
     idiv    esi              ; divide eax by esi
-    add     edx, 48          ; convert edx to ASCII (the remainder)
+    add     edx, 0x30        ; convert edx to ASCII (the remainder)
     push    edx              ; place result on the stack
     cmp     eax, 0           ; can we divide the integer any more?
     jnz     divideLoop
@@ -122,7 +122,7 @@ sprint:
     ; Setup write syscall
     mov     ebx, STDOUT     ; fd = 1 
     mov     eax, SYS_WRITE  ; (4)
-    int     80h             ; invoke kernel
+    int     0x80             ; invoke kernel
 
     ;----------------------------------------
     ; Restore saved registers
@@ -172,7 +172,7 @@ atoi:
     cmp     bl, CHAR_9    ; compare to ascii char '9'
     jg      .finished
 
-    sub     bl, 48        ; convert to decimal representation of ascii
+    sub     bl, 0x30      ; convert to decimal representation of ascii
     add     eax, ebx      ; 
     mov     ebx, 10
     mul     ebx           ; get place value
@@ -200,5 +200,5 @@ quit:
     ; Setup exit syscall
     mov     ebx, 0              ; Exit status value (success)
     mov     eax, SYS_EXIT       ; (1)
-    int     80h                 ; invoke kernel
+    int     0x0                 ; invoke kernel
     ret
