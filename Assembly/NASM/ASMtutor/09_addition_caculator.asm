@@ -15,4 +15,4 @@ _start:
     add     eax, ebx
     call    iprintLF
 
-    call quit
+    call    quit

@@ -6,8 +6,8 @@
 %include        'functions.asm'
 
 SECTION .data
-msg1        db      'Please enter your name: ', 0h
-msg2        db      'Hello, ', 0h
+msg1        db      'Please enter your name: ', 0x00
+msg2        db      'Hello, ', 0x00
 
 SECTION .bss
 sinput:     resb    255
@@ -23,8 +23,8 @@ _start:
     mov     edx, 255        ; number of bytes to read
     mov     ecx, sinput     ; reserved space to store input (buffer)
     mov     ebx, 0          ; Read from the STDIN file
-    mov     eax, 3          ; invoke SYS_REEAD (kernel opcode 3)
-    int     80h
+    mov     eax, 0x03          ; invoke SYS_REEAD (kernel opcode 3)
+    int     0x80
 
     mov     eax, msg2       ; move butter into eax
     call    sprint

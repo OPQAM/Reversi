@@ -13,18 +13,18 @@ _start:
     mov     eax, msg
     call    strlen          ; call function to calculate length of string
 
-    mov     edx, eax        ; store result in eax
+    mov     edx, eax        
     mov     ecx, msg        
-    mov     ebx, 1
-    mov     eax, 4
-    int     80h
+    mov     ebx, 0x01
+    mov     eax, 0x04
+    int     0x80
 
-    mov     ebx, 0
-    mov     eax, 1
-    int 80h
+    mov     ebx, 0x00
+    mov     eax, 0x01
+    int     0x80
 
 strlen:
-    push    ebx             ; push EBX onto the stack (preserve value while we work on this function)
+    push    ebx             ; push EBX onto the stack (preserve value during function call)
     mov     ebx, eax        ; move address in EAX into EBX
 
 nextchar:                   ; same as in previous exercise

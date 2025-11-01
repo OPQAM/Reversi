@@ -13,7 +13,7 @@ _start:
     pop     ecx         ; first stack value: number of arguments
 
 nextArg:
-    cmp     ecx, 0h     ; check if we have arguments left
+    cmp     ecx, 0     ; check if we have arguments left
     jz      noMoreArgs
     pop     eax         ; pop next element off the stack
     call    sprintLF    ; call print with linefeed function

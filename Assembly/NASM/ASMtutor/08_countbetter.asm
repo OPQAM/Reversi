@@ -17,7 +17,7 @@ nextNumber:
     inc     ecx
     mov     eax, ecx
     call    iprintLF
-    cmp     ecx, 101
+    cmp     ecx, 10
     jne     nextNumber
 
     call    quit

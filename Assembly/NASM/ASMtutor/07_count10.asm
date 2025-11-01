@@ -16,13 +16,13 @@ nextNumber:
     inc     ecx
 
     mov     eax, ecx
-    add     eax, 48         ; converting from int to ASCII (to print)
+    add     eax, 0x30       ; converting from int to ASCII (to print)
     push    eax             ; push onto the stack
     mov     eax, esp        ; get address of character on the stack
     call    sprintLF
 
     pop     eax             ; clean stack
-    cmp     ecx, 10         ; check if we met our last number
+    cmp     ecx, 0x0a       ; check if we met our last number
     jne     nextNumber
 
     call    quit
