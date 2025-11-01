@@ -245,5 +245,6 @@ Re-initializing the registers costs a few cycles but makes the code more maintai
 
 ---
 
+#### The sys_socketcall kernel function
 
-
+-> It encapsulates a number of different subroutines, all related to socket operations, within the one function (create, listen, send, receive, close, ...).
