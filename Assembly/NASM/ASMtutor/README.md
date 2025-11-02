@@ -248,3 +248,24 @@ Re-initializing the registers costs a few cycles but makes the code more maintai
 #### The sys_socketcall kernel function
 
 -> It encapsulates a number of different subroutines, all related to socket operations, within the one function (create, listen, send, receive, close, ...).
+
+---
+
+#### Sockets
+
+Use the command:
+
+    sudo netstat -plnt
+
+on lesson 29, in another terminal to view the socket listening to port 9001.
+
+
+And use the command:
+
+    curl http://localhost:9001
+
+on lessons 30, 31, 32 & 33, in another terminal, to view the request headers being read by our program.
+
+--
+
+

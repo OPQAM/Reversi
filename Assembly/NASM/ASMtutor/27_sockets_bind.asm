@@ -36,7 +36,7 @@ _bind:
     push    ecx
     push    edi
     mov     ecx, esp          ; ecx point sto [sockfd, sockaddr, addrlen]
-    mov     ebx, 2            ; subfunction 2 = SYS_BIND
+    mov     ebx, 0x02         ; subfunction 2 = SYS_BIND
     mov     eax, 0x66         ; SYS_SOCKETCALL
     int     0x80
 
