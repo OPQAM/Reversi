@@ -1,6 +1,9 @@
 # Notes on NASM Assembly Language Tutorials
 
+------------------------------------------------------------------------
+
 ##### https://asmtutor.com/
+(by Daniel Givney)
 
 ---
 
@@ -268,4 +271,12 @@ on lessons 30, 31, 32 & 33, in another terminal, to view the request headers bei
 
 --
 
+#### Downloading a webpage
 
+Note: be careful with the 0x5000. I made a mistake by initially doing '0x50'.
+In big endian, http would be represented as 0x0050 (or 80 dec).
+But we're working in little endian and so we need to reverse that into '0x5000'.
+
+Doing '0x50' means that it will be interpreted in little endian, and what ends up in memory is 0x5000 (big endian version). This is intepreted as 20480 (dec).
+
+------------------------------------------------------------------------
