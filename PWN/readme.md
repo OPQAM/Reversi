@@ -46,3 +46,7 @@ Entrypoint:
 ssh -i ~/.ssh/key hacker@pwn.college
 
 
+hacker@assembly-crash-course~set-register:/challenge$ nasm -f elf64 -o /tmp/mov.o /tmp/mov.asm
+hacker@assembly-crash-course~set-register:/challenge$ ld -o /tmp/move.elf /tmp/mov.o
+hacker@assembly-crash-course~set-register:/challenge$ ./run /tmp/move.elf
+
