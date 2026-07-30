@@ -1,0 +1,56 @@
+     1                                  ;  Executable name : eatsyscall
+     2                                  ;  Version         : 1.0
+     3                                  ;  Created date    : 4/25/2022
+     4                                  ;  Last update     : 5/10/2023
+     5                                  ;  Author          : Jeff Duntemann
+     6                                  ;  Architecture    : x64
+     7                                  ;  From            : x64 Assembly Language Step By Step, 4th Edition
+     8                                  ;  Description     : A simple program in assembly for x64 Linux, using NASM 2.14,
+     9                                  ;                    demonstrating the use of the syscall instruction to display text.
+    10                                  ;                    Not for use with SASM.
+    11                                  ;
+    12                                  ;  Build using these commands:
+    13                                  ;    nasm -f elf64 -g -F stabs eatsyscall.asm
+    14                                  ;    ld -o eatsyscall eatsyscall.o
+    15                                  ;
+    16                                  
+    17                                  SECTION .data          ; Section containing initialised data
+    18                                  	
+    19 00000000 456174206174204A6F-     	EatMsg: db "Eat at Joe's!",10
+    19 00000009 652773210A         
+    20                                   	EatLen: equ $-EatMsg	
+    21                                  	
+    22                                  SECTION .bss           ; Section containing uninitialized data	
+    23                                  
+    24                                  SECTION .text          ; Section containing code
+    25                                  
+    26                                  global 	_start	       ; Linker needs this to find the entry point!
+    27                                  	
+    28                                  _start:
+    29 00000000 55                          push rbp
+    30 00000001 4889E5                      mov rbp,rsp
+    31                                  
+    32 00000004 B801000000                  mov rax,1           ; 1 = sys_write for syscall
+    33 00000009 BF01000000                  mov rdi,1           ; 1 = fd for stdout; i.e., write to the terminal window
+    34 0000000E 48BE-                       mov rsi,EatMsg      ; Put address of the message string in rsi
+    34 00000010 [0000000000000000] 
+    35 00000018 BA0E000000                  mov rdx,EatLen      ; Length of string to be written in rdx
+    36 0000001D 0F05                        syscall             ; Make the system call
+    37                                  
+    38 0000001F B83C000000                  mov rax,60          ; 60 = exit the program
+    39 00000024 BF00000000                  mov rdi,0           ; Return value in rdi 0 = nothing to return
+    40 00000029 0F05                        syscall             ; Call syscall to exit
+    41                                  
+    42                                  
+    43                                  
+    44                                  
+    45                                  
+    46                                  
+    47                                  
+    48                                  
+    49                                  
+    50                                  
+    51                                  
+    52                                  
+    53                                  
+    54                                  

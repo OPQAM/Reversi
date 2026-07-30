@@ -1,0 +1,5 @@
+I can use nops to place breaks
+
+I can do b 3 if that is the line at the source code
+Or I can do, for example b *0x40100c if that is it's memory address
+
